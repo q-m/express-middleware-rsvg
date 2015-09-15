@@ -1,0 +1,31 @@
+{
+  "name": "express-middleware-rsvg",
+  "description": "Express middleware to convert SVG to other image formats",
+  "version": "0.1.0",
+
+  "license": "MIT",
+
+  "keywords": [
+    "express",
+    "middleware",
+    "image",
+    "svg"
+  ],
+
+  "author": "wvengen <dev-js@willem.engen.nl>",
+  "homepage": "https://github.com/q-m/express-middleware-rsvg/",
+
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/q-m/express-middleware-rsvg.git"
+  },
+
+  "bugs": {
+    "url": "https://github.com/q-m/express-middleware-rsvg/issues"
+  },
+
+  "dependencies": {
+    "librsvg": "0.5.x",
+    "sanitize-filename": "1.x"
+  }
+}
