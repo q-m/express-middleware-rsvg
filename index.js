@@ -2,22 +2,14 @@
  * Express middleware for rendering SVG
  */
 var Rsvg     = require('librsvg').Rsvg,
-    sanitize = require('sanitize-filename');
+    sanitize = require('sanitize-filename'),
+    formats  = ['svg', 'png', 'pdf'];
 
-module.exports = function(req, res, next) {
-  var format = req.accepts(['svg', 'png', 'pdf']),
-      width  = parseInt(req.query.width),
-      height = parseInt(req.query.height),
-      name   = sanitize(req.query.name || 'chart'),
-      svg    = new Rsvg();
-
-  req.on('data', function(chunk) {
-    svg.write(chunk);
-  });
-
-  req.on('end', function() {
-    svg.end();
-  })
+function process(res, format, width, height, name) {
+  width  = parseInt(width);
+  height = parseInt(height);
+  name   = sanitize(name || 'image');
+  svg    = new Rsvg();
 
   svg.on('finish', function() {
     if (width && !height) {
@@ -37,4 +29,34 @@ module.exports = function(req, res, next) {
     }).data);
     res.end();
   });
+
+  return svg;
+}
+
+function handleRaw(req, res, next) {
+  var format = req.accepts(formats),
+      svg    = process(res, format, req.query.width, req.query.height, req.query.name);
+
+  req.on('data', function(chunk) {
+    svg.write(chunk);
+  });
+
+  req.on('end', function() {
+    svg.end();
+  })
 };
+
+function handleForm(req, res, next) {
+  var svg = process(res, req.body.format, req.body.width, req.body.height, req.body.name);
+
+  svg.write(req.body.data);
+  svg.end();
+}
+
+module.exports = function(req, res, next) {
+  if (req.body) {
+    return handleForm(req, res, next);
+  } else {
+    return handleRaw(req, res, next);
+  }
+}
