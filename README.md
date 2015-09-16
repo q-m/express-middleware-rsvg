@@ -73,7 +73,7 @@ Then an html page could look like the following:
   <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" version="1.1" width="400px">
     <rect x="10" y="10" width="80" height="80" rx="5" ry="5" fill="yellow" stroke="black" stroke-width="2"/>
   </svg>
-  <form action="http://localhost:4000/render" method="post">
+  <form action="http://localhost:3000/render" method="post">
     <input type="hidden" name="format" value="png">
     <input type="hidden" name="data" value="" id="data">
     <input type="submit">
@@ -88,6 +88,11 @@ Then an html page could look like the following:
 </body>
 </html>
 ```
+
+If you want to have a white background for the image (instead of transparent),
+you may want to [draw a white rectangle](http://stackoverflow.com/questions/11293026)
+before other elements.
+
 
 ## License
 
