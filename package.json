@@ -25,7 +25,7 @@
   },
 
   "dependencies": {
-    "librsvg": "0.5.x",
+    "librsvg": "0.6.x",
     "sanitize-filename": "1.x"
   }
 }
